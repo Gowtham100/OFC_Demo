@@ -5,30 +5,36 @@ using UnityEngine;
 public class solarminigame : MonoBehaviour {
 
     public GameObject miniGame;
+    public GameObject solarCam;
     public GameObject player;
     public GameObject sparkles;
     public GameObject text;
+    public GameObject question;
     float rotSpeed = 50f;
     float yPos;
-    bool wonGame = false; 
+    bool wonGame = false;
+    
 
 	// Use this for initialization
 	void Start () {
         miniGame.SetActive(false);
         sparkles.SetActive(false);
         text.SetActive(false);
-	}
+        question.SetActive(false);
+    }
 
     void Update()
     {
-        yPos = this.transform.eulerAngles.y;
+       
+            yPos = this.transform.eulerAngles.y;
 
-        if (yPos > 250 && yPos < 290 && !wonGame)
-        {
-            StartCoroutine(winGame());
-            Debug.Log("wonGame");
-            wonGame = true;
-        }
+            if (yPos > 250 && yPos < 290 && !wonGame)
+            {
+                StartCoroutine(winGame());
+                Debug.Log("wonGame");
+                wonGame = true;
+            }
+        
     }
 	
 	// Update is called once per frame
@@ -43,15 +49,17 @@ public class solarminigame : MonoBehaviour {
     public void ShowMinigame()
     {
         miniGame.SetActive(true);
+        solarCam.SetActive(false);
 
-        StartCoroutine(StartGame()); 
+        
     }
 
-    private IEnumerator StartGame()
+    void OnMouseDown()
     {
-        yield return new WaitForSeconds(4f);
-
         player.SetActive(false);
+        solarCam.SetActive(true);
+        question.SetActive(true);
+
     }
 
     
@@ -61,11 +69,13 @@ public class solarminigame : MonoBehaviour {
     {
         sparkles.SetActive(true);
         text.SetActive(true);
+        question.SetActive(false);
         
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
 
-        miniGame.SetActive(false);
+        text.SetActive(false);
+        solarCam.SetActive(false);
         player.SetActive(true);
     }
 }
