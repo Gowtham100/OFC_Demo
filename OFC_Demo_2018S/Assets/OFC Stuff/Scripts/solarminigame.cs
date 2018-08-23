@@ -10,7 +10,9 @@ public class solarminigame : MonoBehaviour {
     public GameObject sparkles;
     public GameObject text;
     public GameObject question;
-    float rotSpeed = 50f;
+    public GameObject clockWise;
+    public GameObject counterClockWise; 
+    float rotSpeed = 500f;
     float yPos;
     bool wonGame = false;
     
@@ -21,6 +23,8 @@ public class solarminigame : MonoBehaviour {
         sparkles.SetActive(false);
         text.SetActive(false);
         question.SetActive(false);
+        clockWise.SetActive(false);
+        counterClockWise.SetActive(false);
     }
 
     void Update()
@@ -37,14 +41,31 @@ public class solarminigame : MonoBehaviour {
         
     }
 	
-	// Update is called once per frame
-	void OnMouseDrag () {
+    //Rotate Solarpanel Clockwise
+    public void RotateClockwise()
+    {
+        float xRot = rotSpeed * Mathf.Deg2Rad;
+
+        this.transform.Rotate(Vector3.up, -xRot);
+        Debug.Log("rotating ClockWise");
+    }
+
+    public void RotateCounterClockwise()
+    {
+        float xRot = rotSpeed * Mathf.Deg2Rad;
+
+        this.transform.Rotate(Vector3.up, xRot);
+        Debug.Log("rotating Counter ClockWise");
+    }
+
+    // Update is called once per frame
+    /*void OnMouseDrag () {
         float xRot = Input.GetAxis("Mouse X") * rotSpeed * Mathf.Deg2Rad;
 
         this.transform.Rotate(Vector3.up, -xRot);
         Debug.Log("rotating");
 		
-	}
+	}*/
 
     public void ShowMinigame()
     {
@@ -59,6 +80,8 @@ public class solarminigame : MonoBehaviour {
         player.SetActive(false);
         solarCam.SetActive(true);
         question.SetActive(true);
+        clockWise.SetActive(true);
+        counterClockWise.SetActive(true);
 
     }
 
@@ -72,10 +95,12 @@ public class solarminigame : MonoBehaviour {
         question.SetActive(false);
         
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
 
         text.SetActive(false);
         solarCam.SetActive(false);
         player.SetActive(true);
+        clockWise.SetActive(false);
+        counterClockWise.SetActive(false);
     }
 }
